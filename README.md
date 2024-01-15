@@ -37,16 +37,43 @@ Before utilizing **qCompiler**, ensure that the necessary compilers for the targ
 
 To compile programs in any programming language, you must have the relevant compiler installed on the server. Follow these steps to set up the compiler environment:
 
-1. **GCC Compiler:** Install GCC compiler, which can compile programs from the command line. After installation, set environment variables to access GCC command lines from any directory.
+### **Installing and Testing C/C++ on Windows:**
+   Install GCC compiler, which can compile programs from the command line. After installation, set environment variables to access GCC command lines from any directory.
 
-### For Windows:
-- Download [MinGw](http://www.mingw.org/) and install on your server machine.
-- For a quick test, create a simple C/C++ file in any directory.
-- Open a command prompt in that directory and run:
-    ```bash
-      path/to/minGW/g++ filename.c -o output.exe
-    ```
-- If this command runs smoothly and an `output.exe` file appears, your GCC compiler setup is good to go.
+   - Download [MinGw](http://www.mingw.org/) and install on your server machine.
+   - For a quick test, create a simple C/C++ file in any directory.
+   - Open a command prompt in that directory and run:
+       ```bash
+         path/to/minGW/g++ filename.c -o output.exe
+       ```
+   - If this command runs smoothly and an `output.exe` file appears, your GCC compiler setup is good to go.
+
+### **Installing and Testing Python on Windows:**
+   Ensuring Python is correctly installed and configured on your Windows machine is a straightforward process. Follow these simple steps to set up Python for use with **qCompiler**:
+
+   - Download from [official Python website](https://www.python.org/downloads/) and run the installer.
+   
+   - Add Python environment variable to PATH (optional).
+   
+   - Open a Command Prompt and run the following command:
+      ```bash
+        python --version
+      ```
+      You should see the installed Python version. This verifies that Python is successfully installed.
+   
+   - To ensure Python is working as expected, let's run a simple script:
+   
+   - Open a text editor and create a file named `test.py`. Add the following code to the file:
+      ```python
+        print("Hello, Python!")
+      ```
+
+   - Open a Command Prompt and run the following command:
+      ```bash
+        python test.py
+      ```
+      You should see the output "Hello, Python!".
+
 
 # Documentation
 
@@ -66,6 +93,23 @@ const systemCongig = {
  cmd: "g++"
 }
 const language = "CPP";
+
+const data = await compile(code, language, input, systemConfig);
+
+console.log(data)
+//  data.status = true/false
+//  data.output = Output value
+//  data.error  = Error message (if status == false)
+```
+
+### **Python**
+```javascript
+const { compile } = require('qcompiler');
+const systemCongig = {
+ OS: "windows",
+ cmd: "python"
+}
+const language = "PYTHON";
 
 const data = await compile(code, language, input, systemConfig);
 

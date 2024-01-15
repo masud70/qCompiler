@@ -4,6 +4,7 @@ const {
 	executeCPP,
 	executeCPPWithInput,
 } = require("./compiler/cppModule");
+const { runPython } = require("./compiler/pythonModule");
 
 module.exports = {
 	compile: async ({ code, language, input, systemConfig }) => {
@@ -24,10 +25,11 @@ module.exports = {
 					});
 				else data = await executeCPP({ file: data.file });
 			} else if (language == "PYTHON") {
-				data = {
-					status: true,
-					message: "Python file compiled",
-				};
+				data = runPython({
+					code: code,
+					cmd: systemConfig.cmd,
+					input: input,
+				});
 			} else {
 				throw new Error("Invalid language");
 			}
