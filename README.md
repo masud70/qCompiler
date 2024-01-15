@@ -41,11 +41,14 @@ To compile programs in any programming language, you must have the relevant comp
    Install GCC compiler, which can compile programs from the command line. After installation, set environment variables to access GCC command lines from any directory.
 
    - Download [MinGw](http://www.mingw.org/) and install on your server machine.
+
    - For a quick test, create a simple C/C++ file in any directory.
+
    - Open a command prompt in that directory and run:
        ```bash
          path/to/minGW/g++ filename.c -o output.exe
        ```
+
    - If this command runs smoothly and an `output.exe` file appears, your GCC compiler setup is good to go.
 
 ### **Installing and Testing Python on Windows:**
@@ -74,6 +77,23 @@ To compile programs in any programming language, you must have the relevant comp
       ```
       You should see the output "Hello, Python!".
 
+### **Installing and Testing Java on Windows:**
+Ensuring Java is correctly installed and configured on your Windows machine is a simple process. Follow these steps to set up Java for use with **qCompiler**:
+
+- Download Java Development Kit (JDK) from [Oracle JDK Download page](https://www.oracle.com/java/technologies/javase-downloads.html) and install it.
+
+- Set up the `JAVA_HOME` environment variable with variable Name: `JAVA_HOME` and variable Value: `Path to your JDK installation`.
+
+- Add "Path" variable under "System Variables" `%JAVA_HOME%\bin`.
+
+- To verify the Java installation, run the following commands:
+     ```bash
+     java -version
+     javac -version
+     ```
+  You should see information about the installed Java version and the Java compiler.
+
+
 
 # Documentation
 
@@ -93,6 +113,24 @@ const systemCongig = {
  cmd: "g++"
 }
 const language = "CPP";
+
+const data = await compile(code, language, input, systemConfig);
+
+console.log(data)
+//  data.status = true/false
+//  data.output = Output value
+//  data.error  = Error message (if status == false)
+```
+
+### **Java**
+```javascript
+const { compile } = require('qcompiler');
+const systemCongig = {
+ OS: "windows",
+ cmdCompile: "javac",
+ cmdExecute: "java"
+}
+const language = "JAVA";
 
 const data = await compile(code, language, input, systemConfig);
 
@@ -146,3 +184,16 @@ const language = "PYTHON";
 # License
 
 All the contents in this repository are released under the <a href="https://github.com/masud70/qCompiler/License.md">MIT License</a>.
+
+
+
+2. **Compile and Run the Program:**
+   - Open a Command Prompt in the same directory as your `Test.java` file.
+   - Run the following commands:
+     ```bash
+     javac Test.java
+     java Test
+     ```
+   - You should see the output "Hello, Java!".
+
+Congratulations! You've successfully installed and tested Java on your Windows machine. Now, you're ready to use Java with **qCompiler**.

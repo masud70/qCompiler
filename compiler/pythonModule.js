@@ -14,12 +14,6 @@ module.exports = {
 			});
 			await fs.remove(fd.path + fileExt);
 
-			console.log(
-				"Run: ",
-				compileProcess.stderr.toString(),
-				compileProcess.stdout.toString()
-			);
-
 			if (compileProcess.error || compileProcess.stderr.length) {
 				throw new Error(
 					compileProcess.stderr + compileProcess.stderr.toString()
@@ -28,28 +22,6 @@ module.exports = {
 				return {
 					status: true,
 					output: compileProcess.stdout.toString(),
-				};
-			}
-		} catch (error) {
-			throw new Error(error);
-		}
-	},
-
-	runPythonWithInput: async ({ file, input }) => {
-		try {
-			// Execute C++ file
-			const runProcess = spawnSync(cmd, [file], { input });
-
-			await fs.remove(file);
-
-			if (runProcess.error || runProcess.stderr.length) {
-				throw new Error(
-					runProcess.stderr + runProcess.stderr.toString()
-				);
-			} else {
-				return {
-					status: true,
-					output: runProcess.stdout.toString(),
 				};
 			}
 		} catch (error) {

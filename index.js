@@ -5,6 +5,7 @@ const {
 	executeCPPWithInput,
 } = require("./compiler/cppModule");
 const { runPython } = require("./compiler/pythonModule");
+const { compileJava, executeJavaWithInput } = require("./compiler/javaModule");
 
 module.exports = {
 	compile: async ({ code, language, input, systemConfig }) => {
@@ -24,6 +25,16 @@ module.exports = {
 						input: input,
 					});
 				else data = await executeCPP({ file: data.file });
+			} else if (language == "JAVA") {
+				data = await compileJava({
+					code: code,
+					cmd: systemConfig.cmdCompile,
+				});
+				data = await executeJavaWithInput({
+					file: data.file,
+					input: input,
+					cmd: systemConfig.cmdExecute,
+				});
 			} else if (language == "PYTHON") {
 				data = runPython({
 					code: code,
