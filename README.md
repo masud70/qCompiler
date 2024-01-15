@@ -184,16 +184,3 @@ const language = "PYTHON";
 # License
 
 All the contents in this repository are released under the <a href="https://github.com/masud70/qCompiler/License.md">MIT License</a>.
-
-
-
-2. **Compile and Run the Program:**
-   - Open a Command Prompt in the same directory as your `Test.java` file.
-   - Run the following commands:
-     ```bash
-     javac Test.java
-     java Test
-     ```
-   - You should see the output "Hello, Java!".
-
-Congratulations! You've successfully installed and tested Java on your Windows machine. Now, you're ready to use Java with **qCompiler**.
