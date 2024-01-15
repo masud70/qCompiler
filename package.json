@@ -14,7 +14,7 @@
     "compiler"
   ],
   "author": "Md. Masud Mazumder",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/masud70/qCompiler/issues"
   },

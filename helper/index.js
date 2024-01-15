@@ -3,14 +3,23 @@ const fs = require("fs-extra");
 
 module.exports = {
 	generalCodeValidation: (code) => {
-		if (ld.isEmpty(code)) return false;
-		else if (!ld.isString(code)) return false;
-		else return true;
+		try {
+			if (ld.isEmpty(code)) throw new Error("Code length cannot be empty.")
+			if (!ld.isString(code)) throw new Error("Invalid code format.")
+
+			return true;
+		} catch (error) {
+			throw new Error(error)
+		}
 	},
 
 	languageValidator: (language) => {
-		if (ld.isEmpty(language)) return false;
-		else return true;
+		try {
+			if (ld.isEmpty(language)) throw new Error("Language cannot be empty.")
+			return true;
+		} catch (error) {
+			throw new Error(error)
+		}
 	},
 
 	createFile: async ({ data, ext }) => {

@@ -3,21 +3,21 @@ const fs = require("fs-extra");
 const { createFile } = require("../helper");
 
 module.exports = {
-	compileCPP: async (code) => {
+	compileCPP: async ({ code, cmd }) => {
 		try {
 			const fileExt = ".cpp";
 			const fd = await createFile({ data: code, ext: fileExt });
 
 			// Compile the C++ file using g++
-			const compileProcess = spawnSync("g++", [
+			const compileProcess = spawnSync(cmd, [
 				fd.path + fileExt,
 				"-o",
 				fd.path,
 			]);
 			await fs.remove(fd.path + fileExt);
 
-			if (compileProcess.error) {
-				throw new Error(compileProcess.stderr);
+			if (compileProcess.error || compileProcess.stderr.length) {
+				throw new Error(compileProcess.stderr + compileProcess.stderr.toString());
 			} else {
 				return {
 					status: true,
@@ -25,10 +25,7 @@ module.exports = {
 				};
 			}
 		} catch (error) {
-			return {
-				status: false,
-				error: error,
-			};
+			throw new Error(error);
 		}
 	},
 
@@ -38,8 +35,8 @@ module.exports = {
 			const runProcess = spawnSync("./" + file);
 			await fs.remove(file);
 
-			if (runProcess.error) {
-				throw new Error(runProcess.stderr);
+			if (runProcess.error || runProcess.stderr.length) {
+				throw new Error(runProcess.stderr + runProcess.stderr.toString());
 			} else {
 				return {
 					status: true,
@@ -47,10 +44,7 @@ module.exports = {
 				};
 			}
 		} catch (error) {
-			return {
-				status: false,
-				error: error,
-			};
+			throw new Error(error);
 		}
 	},
 
@@ -61,8 +55,8 @@ module.exports = {
 
 			await fs.remove(file);
 
-			if (runProcess.error) {
-				throw new Error(runProcess.stderr);
+			if (runProcess.error || runProcess.stderr.length) {
+				throw new Error(runProcess.stderr + runProcess.stderr.toString());
 			} else {
 				return {
 					status: true,
@@ -70,10 +64,7 @@ module.exports = {
 				};
 			}
 		} catch (error) {
-			return {
-				status: false,
-				error: error,
-			};
+			throw new Error(error);
 		}
 	},
 };

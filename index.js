@@ -6,38 +6,38 @@ const {
 } = require("./compiler/cppModule");
 
 module.exports = {
-	compile: async ({ code, language, input }) => {
-		if (!generalCodeValidation(code) || !languageValidator(language)) {
-			return {
-				status: false,
-				message: "Invalid code or language",
-			};
-		} else {
+	compile: async ({ code, language, input, systemConfig }) => {
+		try {
+			if (systemConfig.OS != "windows") {
+				throw new Error("Only windows OS is availabe in this version.");
+			}
+			generalCodeValidation(code);
+			languageValidator(language);
 			var data = {};
 
-			if (language == "CPP") {
-				data = await compileCPP(code);
-				if (data.status) {
-					if (input)
-						data = await executeCPPWithInput({
-							file: data.file,
-							input: input,
-						});
-					else data = await executeCPP(data.file);
-				}
+			if (language == "CPP" || language == "C") {
+				data = await compileCPP({ code: code, cmd: systemConfig.cmd });
+				if (input)
+					data = await executeCPPWithInput({
+						file: data.file,
+						input: input,
+					});
+				else data = await executeCPP({ file: data.file });
 			} else if (language == "PYTHON") {
 				data = {
 					status: true,
 					message: "Python file compiled",
 				};
 			} else {
-				data = {
-					status: false,
-					message: "Invalid language",
-				};
+				throw new Error("Invalid language");
 			}
 
 			return data;
+		} catch (error) {
+			return {
+				status: false,
+				error: error.message,
+			};
 		}
 	},
 };
