@@ -108,7 +108,7 @@ Ensuring Java is correctly installed and configured on your Windows machine is a
 ### **C/C++**
 ```javascript
 const { compile } = require('qcompiler');
-const systemCongig = {
+const systemConfig = {
  OS: "windows",
  cmd: "g++"
 }
@@ -125,7 +125,7 @@ console.log(data)
 ### **Java**
 ```javascript
 const { compile } = require('qcompiler');
-const systemCongig = {
+const systemConfig = {
  OS: "windows",
  cmdCompile: "javac",
  cmdExecute: "java"
@@ -143,7 +143,7 @@ console.log(data)
 ### **Python**
 ```javascript
 const { compile } = require('qcompiler');
-const systemCongig = {
+const systemConfig = {
  OS: "windows",
  cmd: "python"
 }

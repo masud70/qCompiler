@@ -1,26 +1,33 @@
 {
-  "name": "qcompiler",
-  "version": "1.0.0",
-  "description": "A collection of APIs to compile code on a machine.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/masud70/qCompiler.git"
-  },
-  "keywords": [
-    "compiler"
-  ],
-  "author": "Md. Masud Mazumder",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/masud70/qCompiler/issues"
-  },
-  "homepage": "https://github.com/masud70/qCompiler#readme",
-  "dependencies": {
-    "fs-extra": "^11.2.0",
-    "lodash": "^4.17.21"
-  }
+	"name": "qcompiler",
+	"version": "1.0.0",
+	"description": "A collection of APIs to compile code on a machine.",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/masud70/qCompiler.git"
+	},
+	"keywords": [
+		"compiler",
+		"qcompiler",
+		"node.js",
+		"c",
+		"cpp",
+		"java",
+		"python",
+		"compiler-api"
+	],
+	"author": "Md. Masud Mazumder",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/masud70/qCompiler/issues"
+	},
+	"homepage": "https://github.com/masud70/qCompiler#readme",
+	"dependencies": {
+		"fs-extra": "^11.2.0",
+		"lodash": "^4.17.21"
+	}
 }
