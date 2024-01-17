@@ -108,13 +108,14 @@ Ensuring Java is correctly installed and configured on your Windows machine is a
 ### **C/C++**
 ```javascript
 const { compile } = require('qcompiler');
-const systemConfig = {
+const config = {
  OS: "windows",
- cmd: "g++"
+ cmd: "g++",
+ timeout: 1000
 }
 const language = "CPP";
 
-const data = await compile(code, language, input, systemConfig);
+const data = await compile(code, language, input, config);
 
 console.log(data)
 //  data.status = true/false
@@ -125,14 +126,15 @@ console.log(data)
 ### **Java**
 ```javascript
 const { compile } = require('qcompiler');
-const systemConfig = {
+const config = {
  OS: "windows",
  cmdCompile: "javac",
- cmdExecute: "java"
+ cmdExecute: "java",
+ timeout: 1000
 }
 const language = "JAVA";
 
-const data = await compile(code, language, input, systemConfig);
+const data = await compile(code, language, input, config);
 
 console.log(data)
 //  data.status = true/false
@@ -143,13 +145,14 @@ console.log(data)
 ### **Python**
 ```javascript
 const { compile } = require('qcompiler');
-const systemConfig = {
+const config = {
  OS: "windows",
- cmd: "python"
+ cmd: "python",
+ timeout: 1000
 }
 const language = "PYTHON";
 
-const data = await compile(code, language, input, systemConfig);
+const data = await compile(code, language, input, config);
 
 console.log(data)
 //  data.status = true/false
@@ -175,6 +178,10 @@ const language = "JAVA";
 // For Python
 const language = "PYTHON";
 ```
+
+### Timeout
+In milliseconds the maximum amount of time the program is allowed to run.
+Default: 1000ms.
 
 # **Note**
 

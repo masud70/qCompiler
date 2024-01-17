@@ -27,7 +27,7 @@ module.exports = {
 	createFile: async ({ data, ext }) => {
 		try {
 			const path = "temp";
-			const filePathName = path + "/" + Date.now();
+			const filePathName = path + "\\" + Date.now();
 
 			await fs.ensureDir(path);
 			await fs.outputFile(filePathName + ext, data);

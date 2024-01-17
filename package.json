@@ -1,6 +1,6 @@
 {
 	"name": "qcompiler",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "A collection of APIs to compile code on a machine.",
 	"main": "index.js",
 	"scripts": {

@@ -17,7 +17,9 @@ module.exports = {
 			await fs.remove(fd.path + fileExt);
 
 			if (compileProcess.error || compileProcess.stderr.length) {
-				throw new Error(compileProcess.stderr + compileProcess.stderr.toString());
+				throw new Error(
+					compileProcess.stderr + compileProcess.stderr.toString()
+				);
 			} else {
 				return {
 					status: true,
@@ -29,14 +31,16 @@ module.exports = {
 		}
 	},
 
-	executeCPP: async ({ file }) => {
+	executeCPP: async ({ file, timeout }) => {
 		try {
 			// Execute C++ file
-			const runProcess = spawnSync("./" + file);
+			const runProcess = spawnSync("./" + file, { timeout });
 			await fs.remove(file);
 
 			if (runProcess.error || runProcess.stderr.length) {
-				throw new Error(runProcess.stderr + runProcess.stderr.toString());
+				throw new Error(
+					runProcess.stderr + runProcess.stderr.toString()
+				);
 			} else {
 				return {
 					status: true,
@@ -48,15 +52,17 @@ module.exports = {
 		}
 	},
 
-	executeCPPWithInput: async ({ file, input }) => {
+	executeCPPWithInput: async ({ file, input, timeout }) => {
 		try {
 			// Execute C++ file
-			const runProcess = spawnSync("./" + file, { input });
+			const runProcess = spawnSync(".\\" + file, { input, timeout });
 
 			await fs.remove(file);
 
 			if (runProcess.error || runProcess.stderr.length) {
-				throw new Error(runProcess.stderr + runProcess.stderr.toString());
+				throw new Error(
+					runProcess.stderr + runProcess.stderr.toString()
+				);
 			} else {
 				return {
 					status: true,

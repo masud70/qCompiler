@@ -3,18 +3,18 @@ const fs = require("fs-extra");
 const { createFile } = require("../helper");
 
 module.exports = {
-	compileJava: async ({ code, cmd }) => {
+	compileC: async ({ code, cmd }) => {
 		try {
-			const fileExt = "\\Main.java";
+			const fileExt = ".c";
 			const fd = await createFile({ data: code, ext: fileExt });
 
-			// Compile the Java file using javac
+			// Compile the C file using gcc
 			const compileProcess = spawnSync(cmd, [
 				fd.path + fileExt,
-				"-d",
+				"-o",
 				fd.path,
 			]);
-			await fs.remove(fd.path + ".java");
+			await fs.remove(fd.path + fileExt);
 
 			if (compileProcess.error || compileProcess.stderr.length) {
 				throw new Error(
@@ -23,7 +23,7 @@ module.exports = {
 			} else {
 				return {
 					status: true,
-					file: fd.path,
+					file: fd.path + ".exe",
 				};
 			}
 		} catch (error) {
@@ -31,12 +31,11 @@ module.exports = {
 		}
 	},
 
-	executeJavaWithInput: async ({ file, input, cmd }) => {
+	executeCWithInput: async ({ file, input }) => {
 		try {
-			// Execute Java.class file
-			const runProcess = spawnSync(cmd, ["-cp", "./" + file, "Main"], {
-				input,
-			});
+			// Execute C file
+			console.log(file);
+			const runProcess = spawnSync(".\\" + file, { input });
 
 			await fs.remove(file);
 

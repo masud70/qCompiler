@@ -6,39 +6,49 @@ const {
 } = require("./compiler/cppModule");
 const { runPython } = require("./compiler/pythonModule");
 const { compileJava, executeJavaWithInput } = require("./compiler/javaModule");
+const { compileC, executeCWithInput } = require("./compiler/cModule");
 
 module.exports = {
-	compile: async ({ code, language, input, systemConfig }) => {
+	compile: async ({ code, language, input, config }) => {
 		try {
-			if (systemConfig.OS != "windows") {
+			if (config.OS != "windows") {
 				throw new Error("Only windows OS is availabe in this version.");
 			}
 			generalCodeValidation(code);
 			languageValidator(language);
+			if (!config.timeout) config.timeout = 1000;
 			var data = {};
 
-			if (language == "CPP" || language == "C") {
-				data = await compileCPP({ code: code, cmd: systemConfig.cmd });
+			if (language == "C") {
+				data = await compileC({ code: code, cmd: config.cmd });
+				data = await executeCWithInput({
+					file: data.file,
+					input: input,
+				});
+			} else if (language == "CPP") {
+				data = await compileCPP({ code: code, cmd: config.cmd });
 				if (input)
 					data = await executeCPPWithInput({
 						file: data.file,
 						input: input,
+						timeout: config.timeout,
 					});
 				else data = await executeCPP({ file: data.file });
 			} else if (language == "JAVA") {
 				data = await compileJava({
 					code: code,
-					cmd: systemConfig.cmdCompile,
+					cmd: config.cmdCompile,
 				});
+				console.log("File: ", data);
 				data = await executeJavaWithInput({
 					file: data.file,
 					input: input,
-					cmd: systemConfig.cmdExecute,
+					cmd: config.cmdExecute,
 				});
 			} else if (language == "PYTHON") {
 				data = runPython({
 					code: code,
-					cmd: systemConfig.cmd,
+					cmd: config.cmd,
 					input: input,
 				});
 			} else {
