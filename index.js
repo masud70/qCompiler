@@ -1,12 +1,15 @@
-const { generalCodeValidation, languageValidator } = require("./helper");
+const { generalCodeValidation, languageValidator } = require("./utils");
 const {
 	compileCPP,
 	executeCPP,
 	executeCPPWithInput,
-} = require("./compiler/cppModule");
-const { runPython } = require("./compiler/pythonModule");
-const { compileJava, executeJavaWithInput } = require("./compiler/javaModule");
+} = require("./default/cppModule");
+const { runPython } = require("./default/pythonModule");
+const { compileJava, executeJavaWithInput } = require("./default/javaModule");
 
+// @depricated
+// I suggest a distributed structure with a set of presets(default).
+// Refer to ../defaults/readme for more information
 module.exports = {
 	compile: async ({ code, language, input, systemConfig }) => {
 		try {

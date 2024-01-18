@@ -1,4 +1,4 @@
-const PlatformInfo = require('./PlatformInfo')
+const PlatformInfo = require('../utils/PlatformInfo')
 const fs = require('fs-extra');
 
 const assert = require('assert');
@@ -48,10 +48,10 @@ module.exports = class Compiler {
         throw new Error("Compiler > compile() > Unimplemented method.")
     }
     async run(){
-        throw new Error("Compiler > compile() > Unimplemented method.")
+        throw new Error("Compiler > run() > Unimplemented method.")
     }
     async cleanup(){
-        throw new Error("Compiler > compile() > Unimplemented method.")
+        throw new Error("Compiler > cleanup() > Unimplemented method.")
     }
 
     async createSourceFile() {

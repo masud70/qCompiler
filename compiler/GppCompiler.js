@@ -2,17 +2,17 @@ const Compiler = require("./Compiler");
 const { spawnSync } = require("node:child_process");
 const fs = require("fs-extra");
 
-// gcc C standards
-const gccCStandards = {
-    C17: 'c17',
-    C11: 'c11',
-    C99: 'c99',
+// Todo: Add support for newer or older standards here
+const gnuCppStandards = {
+    Cpp2a: 'c++2a',
+    Cpp17: 'c++17',
+    Cpp14: 'c++14',
 }
 
-class GccCompiler extends Compiler {
-    constructor(standard, sourceCode, programInput) {
-        super('GCC', 'gcc', sourceCode, programInput, '.c');
-        this.standard = gccCStandards[this.standard] ?? gccCStandards.C17;
+class GppCompiler extends Compiler {
+    constructor({standard, code, input}) {
+        super('G++', 'g++', code, input, '.cpp')
+        this.standard = gnuCppStandards[standard] ?? gnuCppStandards.Cpp2a;
     }
 
     // Override
@@ -22,12 +22,15 @@ class GccCompiler extends Compiler {
         const filePath = fd.path
         
         // Compile the C file using gcc
+        // fork() -> spawnSync()
+        // exec(cmd, args[]) -> spawnSync(cmd, [])
         const compileProcess = spawnSync(this.cmd, [
             filePath,
             "-o",
             `temp/${this.tempFileName}${this.outputFileExtention}`,
             `-std=${this.standard}`
         ]);
+        // child -> gcc ./temp/GCC_123456789.c -o temp/GCC_123456789.out -std=c17
 
         if (compileProcess.error || compileProcess.stderr.length) {
             throw new Error(compileProcess.stderr + compileProcess.stderr.toString());
@@ -43,6 +46,8 @@ class GccCompiler extends Compiler {
             outputFilePath,
             { input: this.programInput }
         );
+        // child -> temp/abc.out [runs first]
+        // secondly paste input string
 
         //await fs.remove(outputFilePath);
 
@@ -65,4 +70,4 @@ class GccCompiler extends Compiler {
     }
 }
 
-module.exports = {GccCompiler, gccCStandards};
+module.exports = {GppCompiler, gnuCppStandards}
