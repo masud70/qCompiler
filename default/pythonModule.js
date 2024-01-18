@@ -1,6 +1,6 @@
 const { spawnSync } = require("node:child_process");
 const fs = require("fs-extra");
-const { createFile } = require("../helper");
+const { createFile } = require("../utils");
 
 module.exports = {
 	runPython: async ({ code, cmd, input }) => {
