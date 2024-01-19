@@ -60,6 +60,7 @@ class CompilerFactory {
 			return {
 				status: buildFlags.OK,
 				output: progOutput.output,
+				executionTime: progOutput.executionTime,
 			};
 		} catch (runtimeError) {
 			return {

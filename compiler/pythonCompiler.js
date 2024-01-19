@@ -1,3 +1,4 @@
+const { performance } = require("node:perf_hooks");
 const Compiler = require("./Compiler");
 const { spawnSync } = require("node:child_process");
 
@@ -23,10 +24,15 @@ class PythonCompiler extends Compiler {
 			// Compile the Python file using python
 			// fork() -> spawnSync()
 			// exec(cmd, args[]) -> spawnSync(cmd, [])
+			const startTime = performance.now();
 			const runProcess = spawnSync(this.cmd, [filePath], {
 				input: this.programInput,
 				timeout: this.timeout,
 			});
+			const endTime = performance.now();
+
+			// Save execution time
+			this.executionTime = Math.round(endTime - startTime);
 
 			if (runProcess.error || runProcess.stderr.length) {
 				throw new Error(
@@ -36,6 +42,7 @@ class PythonCompiler extends Compiler {
 				return {
 					status: true,
 					output: runProcess.stdout.toString(),
+					executionTime: this.executionTime,
 				};
 			}
 

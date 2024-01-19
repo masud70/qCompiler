@@ -53,6 +53,7 @@ module.exports = class Compiler {
 		this.name = name;
 		this.cmd = cmd;
 		this.tempPath = "temp";
+		this.executionTime = 0;
 		this.sourceCode = sourceCode;
 		this.timeout = timeout ?? 1000;
 		this.executionCmd = executionCmd;

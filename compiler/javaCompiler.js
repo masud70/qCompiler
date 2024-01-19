@@ -1,3 +1,4 @@
+const { performance } = require("node:perf_hooks");
 const Compiler = require("./Compiler");
 const { spawnSync } = require("node:child_process");
 
@@ -53,6 +54,8 @@ class JavaCompiler extends Compiler {
 	async run() {
 		try {
 			const outputFilePath = `./${this.tempPath}/${this.tempFileName}`;
+
+			const startTime = performance.now();
 			const runProcess = spawnSync(
 				this.executionCmd,
 				["-cp", outputFilePath, "Main"],
@@ -61,8 +64,12 @@ class JavaCompiler extends Compiler {
 					timeout: this.timeout,
 				}
 			);
+			const endTime = performance.now();
 			// child -> temp/abc.class [runs first]
 			// secondly paste input string
+
+			// Save execution time
+			this.executionTime = Math.round(endTime - startTime);
 
 			//await fs.remove(outputFilePath);
 
@@ -72,6 +79,7 @@ class JavaCompiler extends Compiler {
 				return {
 					status: true,
 					output: runProcess.stdout.toString(),
+					executionTime: this.executionTime,
 				};
 			}
 		} catch (error) {

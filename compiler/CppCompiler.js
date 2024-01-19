@@ -1,5 +1,6 @@
 const Compiler = require("./Compiler");
 const { spawnSync } = require("node:child_process");
+// const { performance } = require("node:perf_hooks");
 
 // Todo: Add support for newer or older standards here
 const gnuCppStandards = {
@@ -60,12 +61,25 @@ class CppCompiler extends Compiler {
 	async run() {
 		try {
 			const outputFilePath = `${this.tempPath}/${this.tempFileName}${this.outputFileExtention}`;
+
+			// const startTime = performance.now();
 			const runProcess = spawnSync(outputFilePath, {
 				input: this.programInput,
 				timeout: this.timeout,
 			});
+			// const endTime = performance.now();
 			// child -> temp/abc.out [runs first]
 			// secondly paste input string
+
+			console.log(
+				"Run: ",
+				runProcess,
+				runProcess.stdout.toString(),
+				runProcess.stderr.toString()
+			);
+
+			// Save execution time
+			// this.executionTime = Math.round(endTime - startTime);
 
 			//await fs.remove(outputFilePath);
 
@@ -75,6 +89,7 @@ class CppCompiler extends Compiler {
 				return {
 					status: true,
 					output: runProcess.stdout.toString(),
+					executionTime: this.executionTime,
 				};
 			}
 		} catch (error) {
