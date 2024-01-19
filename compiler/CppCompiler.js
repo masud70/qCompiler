@@ -1,26 +1,24 @@
 const Compiler = require("./Compiler");
 const { spawnSync } = require("node:child_process");
 
-// gcc C standards
-const gccCStandards = {
-	C18: "c18",
-	C17: "c17",
-	C11: "c11",
-	C99: "c99",
+// Todo: Add support for newer or older standards here
+const gnuCppStandards = {
+	Cpp2a: "c++2a",
+	Cpp17: "c++17",
+	Cpp14: "c++14",
 };
 
-class GccCompiler extends Compiler {
+class CppCompiler extends Compiler {
 	constructor({ standard, code, input, cmd, timeout }) {
 		super({
-			name: "GCC",
-			cmd: cmd ?? "gcc",
+			name: "G++",
+			cmd: cmd ?? "g++",
 			sourceCode: code,
 			timeout: timeout,
 			programInput: input,
-			sourceFileExtention: ".c",
+			sourceFileExtention: ".cpp",
 		});
-		this.standard =
-			gccCStandards[`${standard}`.toUpperCase()] ?? gccCStandards.C11;
+		this.standard = gnuCppStandards[standard] ?? gnuCppStandards.Cpp17;
 	}
 
 	// Override
@@ -39,7 +37,7 @@ class GccCompiler extends Compiler {
 				`${this.tempPath}/${this.tempFileName}${this.outputFileExtention}`,
 				`-std=${this.standard}`,
 			]);
-			// child -> gcc ./temp/GCC_123456789.c -o temp/GCC_123456789.out -std=c17
+			// child -> gcc ./temp/GCC_123456789.c -o temp/GCC_123456789.exe -std=c17
 
 			if (compileProcess.error || compileProcess.stderr.length) {
 				throw new Error(
@@ -55,7 +53,7 @@ class GccCompiler extends Compiler {
 			// remove the temporary source file
 			// await fs.remove(filePath);
 		} catch (error) {
-			throw new Error(error.message);
+			throw new Error(error);
 		}
 	}
 
@@ -68,10 +66,8 @@ class GccCompiler extends Compiler {
 			});
 			// child -> temp/abc.out [runs first]
 			// secondly paste input string
-			// Runs for maximum timeout seconds
 
-			// Remove binary file
-			// await fs.remove(outputFilePath);
+			//await fs.remove(outputFilePath);
 
 			if (runProcess.error || runProcess.stderr.length) {
 				throw new Error(runProcess.stderr + runProcess.error);
@@ -82,9 +78,9 @@ class GccCompiler extends Compiler {
 				};
 			}
 		} catch (error) {
-			throw new Error(error.message);
+			throw new Error(error);
 		}
 	}
 }
 
-module.exports = { GccCompiler, gccCStandards };
+module.exports = { CppCompiler, gnuCppStandards };

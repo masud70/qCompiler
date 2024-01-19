@@ -1,10 +1,16 @@
-const { GppCompiler } = require("../compiler/GppCompiler");
-const FCompiler = require("../compiler/CompilerFactory");
+const { CppCompiler } = require("../compiler/CppCompiler");
+const CompilerFactory = require("../compiler/CompilerFactory");
 
-const compileCpp = async (standard, code, input) => {
-	const compiler = new FCompiler(GppCompiler, {standard, code, input});
+const compileCpp = async ({ standard, code, input, cmd, timeout }) => {
+	const compiler = new CompilerFactory(CppCompiler, {
+		standard,
+		code,
+		input,
+		cmd,
+		timeout,
+	});
 
-    return await compiler.buildAndClean()
-}
+	return await compiler.buildRunAndClean();
+};
 
-module.exports = { compileCpp }
+module.exports = { compileCpp };

@@ -1,26 +1,18 @@
 const Compiler = require("./Compiler");
 const { spawnSync } = require("node:child_process");
 
-// gcc C standards
-const gccCStandards = {
-	C18: "c18",
-	C17: "c17",
-	C11: "c11",
-	C99: "c99",
-};
-
-class GccCompiler extends Compiler {
-	constructor({ standard, code, input, cmd, timeout }) {
+class JavaCompiler extends Compiler {
+	constructor({ code, input, cmd, executionCmd, timeout }) {
 		super({
-			name: "GCC",
-			cmd: cmd ?? "gcc",
+			name: "JAVA",
+			cmd: cmd ?? "javac",
 			sourceCode: code,
 			timeout: timeout,
 			programInput: input,
-			sourceFileExtention: ".c",
+			executionCmd: executionCmd ?? "java",
+			sourceFileExtention: "/Main.java",
+			outputFileExtention: "/Main.class",
 		});
-		this.standard =
-			gccCStandards[`${standard}`.toUpperCase()] ?? gccCStandards.C11;
 	}
 
 	// Override
@@ -35,11 +27,10 @@ class GccCompiler extends Compiler {
 			// exec(cmd, args[]) -> spawnSync(cmd, [])
 			const compileProcess = spawnSync(this.cmd, [
 				filePath,
-				"-o",
-				`${this.tempPath}/${this.tempFileName}${this.outputFileExtention}`,
-				`-std=${this.standard}`,
+				"-d",
+				`${this.tempPath}/${this.tempFileName}`,
 			]);
-			// child -> gcc ./temp/GCC_123456789.c -o temp/GCC_123456789.out -std=c17
+			// child -> gcc ./temp/GCC_123456789/Main.java -o temp/GCC_123456789/Main.class
 
 			if (compileProcess.error || compileProcess.stderr.length) {
 				throw new Error(
@@ -55,23 +46,25 @@ class GccCompiler extends Compiler {
 			// remove the temporary source file
 			// await fs.remove(filePath);
 		} catch (error) {
-			throw new Error(error.message);
+			throw new Error(error);
 		}
 	}
 
 	async run() {
 		try {
-			const outputFilePath = `${this.tempPath}/${this.tempFileName}${this.outputFileExtention}`;
-			const runProcess = spawnSync(outputFilePath, {
-				input: this.programInput,
-				timeout: this.timeout,
-			});
-			// child -> temp/abc.out [runs first]
+			const outputFilePath = `./${this.tempPath}/${this.tempFileName}`;
+			const runProcess = spawnSync(
+				this.executionCmd,
+				["-cp", outputFilePath, "Main"],
+				{
+					input: this.programInput,
+					timeout: this.timeout,
+				}
+			);
+			// child -> temp/abc.class [runs first]
 			// secondly paste input string
-			// Runs for maximum timeout seconds
 
-			// Remove binary file
-			// await fs.remove(outputFilePath);
+			//await fs.remove(outputFilePath);
 
 			if (runProcess.error || runProcess.stderr.length) {
 				throw new Error(runProcess.stderr + runProcess.error);
@@ -82,9 +75,9 @@ class GccCompiler extends Compiler {
 				};
 			}
 		} catch (error) {
-			throw new Error(error.message);
+			throw new Error(error);
 		}
 	}
 }
 
-module.exports = { GccCompiler, gccCStandards };
+module.exports = { JavaCompiler };

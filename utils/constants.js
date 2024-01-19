@@ -21,5 +21,5 @@ const standards = {
 // Add support for OS here
 const platforms = {
     WIN32: 0, // Windows
-    LINUX: 1,
+    LINUX: 1, // Linux
 }
