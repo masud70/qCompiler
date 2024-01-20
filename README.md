@@ -31,7 +31,7 @@ All the APIs are written for $\textcolor{green}{Windows}$ and ${\color{red}Linux
 
 # Setting Up Compilers
 
-Before utilizing **qCompiler**, ensure that the necessary compilers for the target programming languages are set up on the server.
+Before utilizing **qCompiler**, ensure that the necessary compilers for the target programming languages are set up on the server. Necessary guidelines can be found [here](https://github.com/masud70/qCompiler/blob/main/CompilerSetup.md).
 
 # Getting Started
 
