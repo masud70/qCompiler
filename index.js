@@ -3,39 +3,69 @@ const { compileCpp } = require("./default/cppModule");
 const { compileJava } = require("./default/javaModule");
 const { compilePython } = require("./default/pyModule");
 
-module.exports = {
+module.exports = class qCompiler {
+	constructor({ standard, cmd, exectionCmd, timeout }) {
+		this.cmd = cmd;
+		this.timeout = timeout;
+		this.standard = standard;
+		this.exectionCmd = exectionCmd;
+	}
+
 	// Compile C code
 	// defaults:
 	// 		standard -> C11
 	// 		cmd -> gcc
 	// 		timeout -> 1000 ms
-	compileC: async ({ standard, code, input, cmd, timeout }) => {
-		return await compileC({ standard, code, input, cmd, timeout });
-	},
+	async compileC(code, input) {
+		return await compileC({
+			code: code,
+			input: input,
+			cmd: this.cmd,
+			timeout: this.timeout,
+			standard: this.standard,
+		});
+	}
 
 	// Compile CPP code
 	// defaults:
 	// 		standard -> C++17
 	// 		cmd -> g++
 	// 		timeout -> 1000 ms
-	compileCPP: async ({ standard, code, input, cmd, timeout }) => {
-		return await compileCpp({ standard, code, input, cmd, timeout });
-	},
+	async compileCpp(code, input) {
+		return await compileCpp({
+			code: code,
+			input: input,
+			cmd: this.cmd,
+			timeout: this.timeout,
+			standard: this.standard,
+		});
+	}
 
 	// Compile JAVA code
 	// defaults:
 	// 		cmd -> javac
 	// 		executionCmd -> java
 	// 		timeout -> 1000 ms
-	compileJava: async ({ code, input, cmd, exectionCmd, timeout }) => {
-		return await compileJava({ code, input, cmd, exectionCmd, timeout });
-	},
+	async compileJava(code, input) {
+		return await compileJava({
+			code: code,
+			input: input,
+			cmd: this.cmd,
+			timeout: this.timeout,
+			exectionCmd: this.exectionCmd,
+		});
+	}
 
 	// Compile PYTHON code
 	// defaults:
 	// 		cmd -> python
 	// 		timeout -> 1000 ms
-	compilePython: async ({ code, input, cmd, timeout }) => {
-		return await compilePython({ code, input, cmd, timeout });
-	},
+	async compilePython(code, input) {
+		return await compilePython({
+			code: code,
+			input: input,
+			cmd: this.cmd,
+			timeout: this.timeout,
+		});
+	}
 };

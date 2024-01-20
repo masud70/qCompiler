@@ -76,8 +76,12 @@ class CppCompiler extends Compiler {
 
 			//await fs.remove(outputFilePath);
 
-			if (runProcess.error || runProcess.stderr.length) {
-				throw new Error(runProcess.stderr + runProcess.error);
+			if (runProcess.status !== 0) {
+				throw new Error(
+					runProcess.stderr.length
+						? runProcess.stderr.toString()
+						: "Process terminated with an error."
+				);
 			} else {
 				return {
 					status: true,

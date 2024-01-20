@@ -34,9 +34,11 @@ class PythonCompiler extends Compiler {
 			// Save execution time
 			this.executionTime = Math.round(endTime - startTime);
 
-			if (runProcess.error || runProcess.stderr.length) {
+			if (runProcess.status !== 0) {
 				throw new Error(
-					runProcess.stderr + runProcess.stderr.toString()
+					runProcess.stderr.length
+						? runProcess.stderr.toString()
+						: "Process terminated with an error."
 				);
 			} else {
 				return {

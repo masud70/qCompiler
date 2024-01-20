@@ -1,4 +1,0 @@
-> These are broilerplate functions. Users can use these functions out of the box.
-> Default functions can be thought of as default template functions ready for action.
-> Users can customize by instantiating compilers from the "../compiler/" directory.
-> For instance, by default we may assume g++ compiler for c++ but the user wants to compile using clang. In this case, they can instantiate the ClangCompiler class and compile their code as they see fit.
