@@ -102,7 +102,7 @@ Default: 1000ms.
 To compile a C program you can use the following template.
 
 ```javascript
-const compiler = new qCompiler(config);
+const compiler = new QCompiler(config);
 
 const response = await compile.compileC(code, input);
 
@@ -114,7 +114,7 @@ console.log(response)
 To compile a C++ program you can use the following template.
 
 ```javascript
-const compiler = new qCompiler(config);
+const compiler = new QCompiler(config);
 
 const response = await compile.compileCpp(code, input);
 
@@ -126,7 +126,7 @@ console.log(response)
 To compile a Java program you can use the following template.
 
 ```javascript
-const compiler = new qCompiler(config);
+const compiler = new QCompiler(config);
 
 const response = await compile.compileJava(code, input);
 
@@ -138,7 +138,7 @@ console.log(response)
 To compile a Python program you can use the following template.
 
 ```javascript
-const compiler = new qCompiler(config);
+const compiler = new QCompiler(config);
 
 const response = await compile.compilePython(code, input);
 

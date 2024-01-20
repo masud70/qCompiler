@@ -3,7 +3,7 @@ const { compileCpp } = require("./default/cppModule");
 const { compileJava } = require("./default/javaModule");
 const { compilePython } = require("./default/pyModule");
 
-module.exports = class qCompiler {
+module.exports = class QCompiler {
 	constructor({ standard, cmd, exectionCmd, timeout }) {
 		this.cmd = cmd;
 		this.timeout = timeout;
